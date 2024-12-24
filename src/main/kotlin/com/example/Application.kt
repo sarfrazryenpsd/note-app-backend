@@ -4,15 +4,19 @@ import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.plugins.contentnegotiation.*
+import io.ktor.server.request.*
+import io.ktor.server.response.*
+import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
 import kotlinx.serialization.Serializable
 import kotlin.collections.set
 
-@Suppress("unused")
-fun main(args: Array<String>) {
-    io.ktor.server.netty.EngineMain.main(args)
-}
 
+fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
+
+
+@Suppress("unused")
+@JvmOverloads
 fun Application.module(testing: Boolean = false) {
     install(Sessions){
         cookie<MySession>("MY_SESSION"){
@@ -28,7 +32,31 @@ fun Application.module(testing: Boolean = false) {
 
         }
     }
-    configureRouting()
+    routing {
+        get("/") {
+            call.respondText("Hello World!")
+        }
+        get("/note/{id}"){
+            val id = call.parameters["id"]
+            call.respond("$id")
+        }
+        get("/note"){
+            val id = call.request.queryParameters["id"]
+            call.respond("$id")
+        }
+        route("/notes"){
+            route("/create"){
+                post {
+                    val body = call.receive<String>()
+                    call.respond(body)
+                }
+            }
+            delete {
+                val body = call.receive<String>()
+                call.respond(body)
+            }
+        }
+    }
 }
 
 @Serializable

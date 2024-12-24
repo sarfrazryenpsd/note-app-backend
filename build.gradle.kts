@@ -24,6 +24,11 @@ dependencies {
     implementation(libs.authentication)
     implementation(libs.content.negotiation)
     implementation(libs.kotlinx.serialization)
+    implementation(libs.exposed.core)
+    implementation(libs.exposed.dao)
+    implementation(libs.exposed.jdbc)
+    implementation(libs.hikari)
+    implementation(libs.postgres)
     implementation(libs.gson)
 
     implementation(libs.ktor.server.core)
