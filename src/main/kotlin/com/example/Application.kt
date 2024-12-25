@@ -1,5 +1,6 @@
 package com.example
 
+import com.example.repository.DatabaseFactory
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -18,6 +19,9 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 @Suppress("unused")
 @JvmOverloads
 fun Application.module(testing: Boolean = false) {
+
+    DatabaseFactory.init()
+
     install(Sessions){
         cookie<MySession>("MY_SESSION"){
             cookie.extensions["SameSite"] = "lax"
