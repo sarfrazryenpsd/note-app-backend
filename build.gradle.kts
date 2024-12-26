@@ -21,6 +21,7 @@ repositories {
 
 dependencies {
     implementation(libs.ktor.sessons)
+    implementation(libs.ktor.resources)
     implementation(libs.authentication)
     implementation(libs.jwt)
     implementation(libs.content.negotiation)

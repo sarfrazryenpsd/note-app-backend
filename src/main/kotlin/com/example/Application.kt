@@ -5,11 +5,15 @@ import com.example.authentication.hash
 import com.example.data.model.User
 import com.example.repository.DatabaseFactory
 import com.example.repository.repo
+import com.example.routes.userRoute
+import io.ktor.resources.Resources
 import io.ktor.serialization.gson.*
+import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.request.*
+import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.sessions.*
@@ -39,32 +43,19 @@ fun Application.module(testing: Boolean = false) {
     }
 
     install(ContentNegotiation){
-        gson {
+        json()
+    }
+    install(Resources){
 
-        }
     }
     routing {
-        get("/") {
+        /*get("/") {
             call.respondText("Hello World!")
-        }
-        get("/note/{id}"){
-            val id = call.parameters["id"]
-            call.respond("$id")
-        }
-        get("/token"){
-            val email = call.request.queryParameters["email"]!!
-            val password = call.request.queryParameters["password"]!!
-            val username = call.request.queryParameters["username"]!!
+        }*/
 
-            val user = User(email,hashFunction(password),username)
-            call.respond(jwtService.generateToken(user))
+        userRoute(db, jwtService, hashFunction)
 
-        }
-        get("/note"){
-            val id = call.request.queryParameters["id"]
-            call.respond("$id")
-        }
-        route("/notes"){
+        /*route("/notes"){
             route("/create"){
                 post {
                     val body = call.receive<String>()
@@ -75,7 +66,7 @@ fun Application.module(testing: Boolean = false) {
                 val body = call.receive<String>()
                 call.respond(body)
             }
-        }
+        }*/
     }
 }
 
