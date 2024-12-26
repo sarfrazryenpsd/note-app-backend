@@ -22,6 +22,7 @@ repositories {
 dependencies {
     implementation(libs.ktor.sessons)
     implementation(libs.authentication)
+    implementation(libs.jwt)
     implementation(libs.content.negotiation)
     implementation(libs.kotlinx.serialization)
     implementation(libs.exposed.core)
