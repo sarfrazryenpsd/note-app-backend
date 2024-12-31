@@ -2,17 +2,13 @@ package com.example
 
 import com.example.authentication.JwtService
 import com.example.authentication.hash
-import com.example.data.model.User
 import com.example.repository.DatabaseFactory
-import com.example.repository.repo
-import com.example.routes.userRoute
-import io.ktor.resources.Resources
+import com.example.repository.Repo
+import com.example.routes.userRoutes
 import io.ktor.serialization.gson.*
-import io.ktor.serialization.kotlinx.json.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.plugins.contentnegotiation.*
-import io.ktor.server.request.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -29,7 +25,7 @@ fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 fun Application.module(testing: Boolean = false) {
 
     DatabaseFactory.init()
-    val db = repo()
+    val db = Repo()
     val jwtService = JwtService()
     val hashFunction = {s: String -> hash(s) }
 
@@ -38,22 +34,21 @@ fun Application.module(testing: Boolean = false) {
             cookie.extensions["SameSite"] = "lax"
         }
     }
-    install(Authentication){
-
-    }
+    install(Authentication)
 
     install(ContentNegotiation){
-        json()
+        gson {
+            setPrettyPrinting()
+        }
     }
-    install(Resources){
+    install(Resources)
 
-    }
     routing {
-        /*get("/") {
+        get("/") {
             call.respondText("Hello World!")
-        }*/
+        }
 
-        userRoute(db, jwtService, hashFunction)
+        userRoutes(db, jwtService, hashFunction)
 
         /*route("/notes"){
             route("/create"){
@@ -71,4 +66,4 @@ fun Application.module(testing: Boolean = false) {
 }
 
 @Serializable
-data class MySession(val id: String, val count: Int)
+data class MySession(val count: Int = 0)
