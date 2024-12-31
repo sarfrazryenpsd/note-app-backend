@@ -7,4 +7,4 @@ data class User(
     val email: String,
     val hashPassword: String,
     val userName: String
-): io.ktor.server.auth.Principal
+)

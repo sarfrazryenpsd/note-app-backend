@@ -4,10 +4,12 @@ import com.example.authentication.JwtService
 import com.example.authentication.hash
 import com.example.repository.DatabaseFactory
 import com.example.repository.Repo
+import com.example.routes.noteRoutes
 import com.example.routes.userRoutes
 import io.ktor.serialization.gson.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
 import io.ktor.server.plugins.contentnegotiation.*
 import io.ktor.server.resources.*
 import io.ktor.server.response.*
@@ -34,7 +36,18 @@ fun Application.module(testing: Boolean = false) {
             cookie.extensions["SameSite"] = "lax"
         }
     }
-    install(Authentication)
+    install(Authentication){
+        jwt("jwt") {
+            verifier(jwtService.verifier)
+            realm = "Note Server"
+            validate {
+                val payload = it.payload
+                val email = payload.getClaim("email").asString()
+                val user = db.findUser(email)
+                user
+            }
+        }
+    }
 
     install(ContentNegotiation){
         gson {
@@ -49,6 +62,7 @@ fun Application.module(testing: Boolean = false) {
         }
 
         userRoutes(db, jwtService, hashFunction)
+        noteRoutes(db, hashFunction)
 
         /*route("/notes"){
             route("/create"){
