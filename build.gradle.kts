@@ -18,16 +18,15 @@ application {
 }
 
 tasks {
-    create("stage").dependsOn("installDist")
+    register("stage") {
+        dependsOn("installDist")
+    }
 
     jar {
         manifest {
             attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
         }
-        // Set the archive base name directly as a string
         archiveBaseName.set("ktor-sample")
-
-        // Include all dependencies
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
         from(sourceSets.main.get().output)
         dependsOn(configurations.runtimeClasspath)
