@@ -15,29 +15,8 @@ repositories {
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
-    applicationName = "ktor-sample"
 }
 
-tasks {
-    register("stage") {
-        dependsOn("installDist")
-    }
-
-    jar {
-        manifest {
-            attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
-        }
-        archiveBaseName.set("ktor-sample")
-        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-        from(sourceSets.main.get().output)
-        dependsOn(configurations.runtimeClasspath)
-        from({
-            configurations.runtimeClasspath.get()
-                .filter { it.name.endsWith("jar") }
-                .map { zipTree(it) }
-        })
-    }
-}
 
 
 dependencies {
