@@ -25,7 +25,7 @@ tasks {
             attributes["Main-Class"] = "io.ktor.server.netty.EngineMain"
         }
         // Set the archive base name directly as a string
-        archiveBaseName.set("example")
+        archiveBaseName.set("ktor-sample")
 
         // Include all dependencies
         duplicatesStrategy = DuplicatesStrategy.EXCLUDE
