@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
@@ -12,9 +14,38 @@ repositories {
     mavenCentral()
 }
 
+// In build.gradle.kts
+
+// Add these configurations at the top level
+kotlin {
+    jvmToolchain(22) // Or whichever JDK version you're using
+}
+
+// Update the application block
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=true")
+    applicationDefaultJvmArgs = listOf(
+        "-Xmx256m", // Maximum heap size
+        "-Xms128m", // Initial heap size
+        "-XX:+UseG1GC", // Use G1 Garbage Collector
+        "-XX:MaxMetaspaceSize=128m",
+        "-XX:+UseStringDeduplication",
+        "-Dio.ktor.development=false" // Set to false for production
+    )
+}
+
+// Add this configuration
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_22) // Match your JDK version
+        freeCompilerArgs.add("-Xjsr305=strict")
+    }
+}
+
+// Optional: Configure the Java process for the build itself
+tasks.withType<JavaCompile> {
+    options.encoding = "UTF-8"
+    options.compilerArgs = listOf("-Xlint:deprecation")
 }
 
 
