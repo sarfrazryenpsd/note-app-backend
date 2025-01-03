@@ -18,7 +18,7 @@ repositories {
 
 // Add these configurations at the top level
 kotlin {
-    jvmToolchain(22) // Or whichever JDK version you're using
+    jvmToolchain(17) // Or whichever JDK version you're using
 }
 
 // Update the application block
@@ -37,7 +37,7 @@ application {
 // Add this configuration
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_22) // Match your JDK version
+        jvmTarget.set(JvmTarget.JVM_17) // Match your JDK version
         freeCompilerArgs.add("-Xjsr305=strict")
     }
 }
