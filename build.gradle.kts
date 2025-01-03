@@ -19,8 +19,8 @@ repositories {
 // Add these configurations at the top level
 java {
     toolchain {
-        languageVersion = JavaLanguageVersion.of(17)
-        vendor = JvmVendorSpec.AZUL
+        languageVersion.set(JavaLanguageVersion.of(17))
+        vendor.set(JvmVendorSpec.AZUL)
     }
 }
 
