@@ -27,7 +27,7 @@ java {
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
     applicationDefaultJvmArgs = listOf(
-        "-Xmx256m", // Maximum heap size
+        "-Xmx256m", // Maximum heap
         "-Xms128m", // Initial heap size
         "-XX:+UseG1GC", // Use G1 Garbage Collector
         "-XX:MaxMetaspaceSize=128m",
