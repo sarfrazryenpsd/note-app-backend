@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ['jdk17', 'gradle']
+nixPkgs = ['openjdk17', 'gradle']
 
 [phases.build]
 cmds = ['./gradlew build --no-daemon']
