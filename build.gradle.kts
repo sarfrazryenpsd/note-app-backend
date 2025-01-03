@@ -17,8 +17,11 @@ repositories {
 // In build.gradle.kts
 
 // Add these configurations at the top level
-kotlin {
-    jvmToolchain(17) // Or whichever JDK version you're using
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+        vendor = JvmVendorSpec.AMAZON
+    }
 }
 
 // Update the application block

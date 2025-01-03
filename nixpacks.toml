@@ -5,7 +5,7 @@ nixPkgs = ['jdk17', 'gradle']
 cmds = ['./gradlew build --no-daemon']
 
 [start]
-cmd = 'java -jar build/libs/your-app-name.jar'
+cmd = 'java -jar build/libs/ktor-sample.jar'
 
 [container]
 memory = 512
