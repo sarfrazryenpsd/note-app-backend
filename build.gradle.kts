@@ -19,7 +19,7 @@ repositories {
 // Add these configurations at the top level
 java {
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(11))
     }
 }
 
@@ -39,7 +39,7 @@ application {
 // Add this configuration
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile> {
     compilerOptions {
-        jvmTarget.set(JvmTarget.JVM_17) // Match your JDK version
+        jvmTarget.set(JvmTarget.JVM_11) // Match your JDK version
         freeCompilerArgs.add("-Xjsr305=strict")
     }
 }
