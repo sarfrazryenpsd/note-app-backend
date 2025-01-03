@@ -2,8 +2,7 @@
 nixPkgs = ['jdk17', 'gradle']
 
 [phases.build]
-cmds = ['chmod +x./gradlew',
-    './gradlew clean buildFatJar']
+cmds = ['./gradlew build --no-daemon']
 
 [start]
 cmd = 'java -jar build/libs/ktor-sample.jar'
